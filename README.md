@@ -4,10 +4,7 @@
 
 ### First, you should run these commands
 
-
-```docker-compose build --no-cache```
-
-```docker-compose up -d```
+```./install.sh```
 
 ### Then, you can run python files with this command
 
