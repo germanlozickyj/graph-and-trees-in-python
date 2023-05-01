@@ -8,45 +8,35 @@ adyacentes.
 Puede suponer que los cuatro bordes de la cuadricula estan
 rodeados de agua.
 """
-class Node:
-    def __init__(self, value):
-        self.value = value
-        self.next = None
-        self.previous = None
 
-class DoublyLinkedList():
-    def __init__(self):
-        self.head = None
-        self.tail = None
-        self.lenght = 0
+class regresiveIslands:
+    def __init__(self) -> None:
+        self.map = None
 
-    def add(self, value):
-        newNode = Node(value)
-        if self.head is None:
-            self.head = newNode
-            self.tail = newNode
-        else:
-            newNode.previous = self.tail
-            self.tail.next = newNode
-            self.tail = newNode
-        self.lenght += 1
+    def number_of_islas(self, map: list[list[str]]) -> int:
+        self.map = map
+        counter = 0
+        for i in range(len(self.map)) :
+            for j in range(len(self.map[0])) :
+                self.dfs(i, j)
+                counter +=1
+        return counter
 
-        return self
-        
-        
-def search_island_number(matrices):
-    linkedList = DoublyLinkedList()
-    for matriz in matrices :
-        linkedList.add(matriz)
+    def dfs(self, i, j):
+        if 0 <= i < len(self.map) and 0 <= j < len(self.map[0]) and self.map[i][j] == '1' :
+            self.map[i][j] = '2'
+            self.dfs(i+1, j)
+            self.dfs(i-1, j)
+            self.dfs(i, j+1)
+            self.dfs(i, j-1)
 
-    result = dfs(linkedList)
+regresive = regresiveIslands()
 
-def dfs(linkedList):
-    for linked
-
-search_island_number([
+regresive_result = regresive.number_of_islas(map = [
     ["1","1","0","0","0"],
     ["1","1","0","0","0"],
     ["0","0","1","0","0"],
     ["0","0","0","1","1"],
 ])
+
+print(regresive_result)
