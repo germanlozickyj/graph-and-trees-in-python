@@ -8,19 +8,36 @@ adyacentes.
 Puede suponer que los cuatro bordes de la cuadricula estan
 rodeados de agua.
 """
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+        self.previous = None
 
-def search_island_number(matriz):
-    current_pointer = 0
-    hash_island_found = {}
-    counter = 0
-    for matriz_binary in matriz :
-        for binary in matriz_binary:
-            if binary == "1" :
-                result = dfs(matriz_binary, current_pointer)
-                current_pointer += 1
-    
-def dfs(matriz, pointer):
-    pass
+class DoublyLinkedList():
+    def __init__(self):
+        self.head = None
+        self.tail = None
+        self.lenght = 0
+
+    def add(self, value):
+        newNode = Node(value)
+        if self.head is None:
+            self.head = newNode
+            self.tail = newNode
+        else:
+            newNode.previous = self.tail
+            self.tail.next = newNode
+            self.tail = newNode
+        self.lenght += 1
+
+        return self
+        
+        
+def search_island_number(matrices):
+    linkedList = DoublyLinkedList()
+    for matriz in matrices :
+        linkedList.add(matriz)
 
 search_island_number([
     ["1","1","0","0","0"],
