@@ -39,6 +39,11 @@ def search_island_number(matrices):
     for matriz in matrices :
         linkedList.add(matriz)
 
+    result = dfs(linkedList)
+
+def dfs(linkedList):
+    for linked
+
 search_island_number([
     ["1","1","0","0","0"],
     ["1","1","0","0","0"],
