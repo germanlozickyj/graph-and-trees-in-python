@@ -44,25 +44,87 @@ class issueOne():
             self.dfs(i, j + 1, sr, sc, color)
             self.dfs(i, j + 2, sr, sc, color)
 
-issueOne = issueOne([[1,1,1],[1,1,0],[1,0,1]])
-print(issueOne.remplazeColor(sr = 1, sc = 1, color = 2))
+#issueOne = issueOne([[1,1,1],[1,1,0],[1,0,1]])
+#print(issueOne.remplazeColor(sr = 1, sc = 1, color = 2))
 
 
 """
 
 Construir una cadena a partir de un árbol binario
-Dada la raíz de un árbol binario, construya una cadena formada por paréntesis y enteros a partir de un árbol binario con el modo de recorrido de preorden, y devuélvala. Omita todos los pares de paréntesis vacíos que no afecten a la relación de mapeo uno a uno entre la cadena y el árbol binario original.
+Dada la raíz de un árbol binario, construya una cadena 
+formada por paréntesis y enteros a partir de un árbol binario 
+con el modo de recorrido de preorden, y devuélvala. 
+Omita todos los pares de paréntesis vacíos que no afecten a la relación de mapeo 
+uno a uno entre la cadena y el árbol binario original.
 
 Ejemplo 1
 Entrada: raíz = [1,2,3,4]
 Salida: "1(2(4))(3)"
-Explicación: Originalmente, tiene que ser “1(2(4)())(3()())”, pero hay que omitir todos los pares de paréntesis vacíos innecesarios. Y será “1(2(4))(3)”
+Explicación: Originalmente, tiene que ser “1(2(4)())(3()())”, 
+pero hay que omitir todos los pares de paréntesis vacíos innecesarios. Y será “1(2(4))(3)”
 
 Ejemplo 2:
 Entrada: raíz = [1,2,3,null,4]
 Salida: "1(2()(4))(3)"
-Explicación: Casi lo mismo que el primer ejemplo, excepto que no podemos omitir el primer par de paréntesis para romper la relación de mapeo uno a uno entre la entrada y la salida.
+Explicación: Casi lo mismo que el primer ejemplo, excepto que no podemos omitir el primer 
+par de paréntesis para romper la relación de mapeo uno a uno entre la entrada y la salida.
+"""
+class Node :
+    def __init__(self, value) -> None:
+        self.value = value
+        self.right = None
+        self.left = None
 
+    def get(self, pointer):
+        if pointer == 'left':
+            return self.left
+        return self.right
+
+class issueTwo:
+    def __init__(self, root) -> None:
+        self.root = root
+    
+    def resolve(self):
+        self.root = self.make_tree()
+        right = self.dfs('right')
+        left = self.dfs('left')
+        return str(self.root.value) + right + left
+    
+    def make_tree(self):
+        rootNode = Node(self.root[0])
+        rootNode.right = []
+        rootNode.left = []
+
+        for value in self.root[1:] :
+            if value is not None:
+                if value % 2 == 0:
+                    rootNode.right.append(value)
+                else:
+                    rootNode.left.append(value)
+        return rootNode
+    
+    def dfs(self, pointer, str = ''):
+        if len(self.root.get(pointer)) == 0:
+            return str
+        else:
+            str = f"({self.root.get(pointer)[0]})"
+        if len(self.root.get(pointer)) > 1 :
+            str = str[0:len(str)-1] + f"({self.root.get(pointer)[1]}))"
+            self.root.get(pointer).pop(1)
+        self.root.get(pointer).pop(0)
+
+        return self.dfs(pointer, str)
+
+#- tests
+        
+#issueTwo = issueTwo([1,2,3,4])
+#print(issueTwo.resolve())
+
+#issueTwo = issueTwo([1,2,3,None,4])
+#print(issueTwo.resolve())
+
+
+"""
 Batalla Naval - Contar Barcos
 Dado un tablero de m x n donde cada celda es un acorazado ‘X’ o un vacío ‘.’, devuelva el número de los barcos en el tablero. Los barcos sólo pueden colocarse horizontal o verticalmente en el tablero. En otras palabras, sólo pueden tener la forma 1 x k (1 fila, k columnas) o k x 1 (k filas, 1 columna), donde k puede ser de cualquier tamaño. Al menos una celda horizontal o vertical separa dos barcos (es decir, no hay barcos adyacentes).
 
