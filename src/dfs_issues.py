@@ -126,7 +126,10 @@ class issueTwo:
 
 """
 Batalla Naval - Contar Barcos
-Dado un tablero de m x n donde cada celda es un acorazado ‘X’ o un vacío ‘.’, devuelva el número de los barcos en el tablero. Los barcos sólo pueden colocarse horizontal o verticalmente en el tablero. En otras palabras, sólo pueden tener la forma 1 x k (1 fila, k columnas) o k x 1 (k filas, 1 columna), donde k puede ser de cualquier tamaño. Al menos una celda horizontal o vertical separa dos barcos (es decir, no hay barcos adyacentes).
+Dado un tablero de m x n donde cada celda es un acorazado 'X' o un vacío '.', devuelva el número de los barcos en el tablero. 
+Los barcos sólo pueden colocarse horizontal o verticalmente en el tablero. En otras palabras, sólo pueden tener 
+la forma 1 x k (1 fila, k columnas) o k x 1 (k filas, 1 columna), donde k puede ser de cualquier tamaño. 
+Al menos una celda horizontal o vertical separa dos barcos (es decir, no hay barcos adyacentes).
 
 Ejemplo 1:
 Entrada: tablero = [[“X”,".",".", “X”],[".",".", “X”],[".",".", “X”]
@@ -135,9 +138,35 @@ Salida: 2
 Ejemplo 2:
 Entrada: tablero = [["."]]
 Salida: 0
+"""
+class issueThree :
+    def __init__(self, board: list[list[str]]) -> int:
+        self.board = board
 
+    def dfs(self, i,j):
+       if 0 <= i < len(self.board) and 0 <= j < len(self.board[0]) and self.board[i][j] == 'X':
+           self.board[i][j] = '.'
+           self.dfs(i+1,j)
+           self.dfs(i-1,j)
+           self.dfs(i,j-1)
+           self.dfs(i,j+1)
+
+    def getNumberOfboats (self):
+        counter = 0
+        for i in range(len(self.board)):
+            for j in range(len(self.board[0])):
+                if self.board[i][j] == 'X':
+                    self.dfs(i,j)
+                    counter+=1
+        return counter
+
+issueThree = issueThree([["X",".", "X"],[".",".", "X"],[".",".", "X"]])
+result = issueThree.getNumberOfboats()
+print(result)
+"""
 Número de Islas Cerradas
-Dada una cuadrícula 2D formada por 0s (tierra) y 1s (agua). Una isla es un grupo máximo de 0s conectado en 4 direcciones y una isla cerrada es una isla totalmente (toda a la izquierda, arriba, derecha, abajo) rodeada de 1s. Devuelve el número de islas cerradas.
+Dada una cuadrícula 2D formada por 0s (tierra) y 1s (agua). Una isla es un grupo máximo de 0s conectado en 4 direcciones 
+y una isla cerrada es una isla totalmente (toda a la izquierda, arriba, derecha, abajo) rodeada de 1s. Devuelve el número de islas cerradas.
 
 Ejemplo 1:
 Input: grid = [[1,1,1,1,1,1,1,0],[1,0,0,0,0,1,1,0],[1,0,1,0,1,1,1,0],[1,0,0,0,0,1,0,1],[1,1,1,1,1,1,1,0]]
