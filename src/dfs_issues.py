@@ -159,17 +159,59 @@ class issueThree :
                     self.dfs(i,j)
                     counter+=1
         return counter
-
+"""
 issueThree = issueThree([["X",".", "X"],[".",".", "X"],[".",".", "X"]])
 result = issueThree.getNumberOfboats()
 print(result)
+"""
 """
 Número de Islas Cerradas
 Dada una cuadrícula 2D formada por 0s (tierra) y 1s (agua). Una isla es un grupo máximo de 0s conectado en 4 direcciones 
 y una isla cerrada es una isla totalmente (toda a la izquierda, arriba, derecha, abajo) rodeada de 1s. Devuelve el número de islas cerradas.
 
 Ejemplo 1:
-Input: grid = [[1,1,1,1,1,1,1,0],[1,0,0,0,0,1,1,0],[1,0,1,0,1,1,1,0],[1,0,0,0,0,1,0,1],[1,1,1,1,1,1,1,0]]
+Input: grid = [
+    [1,1,1,1,1,1,1,0],
+    [1,0,0,0,0,1,1,0],
+    [1,0,1,0,1,1,1,0],
+    [1,0,0,0,0,1,0,1],
+    [1,1,1,1,1,1,1,0]
+    ]
 Salida: 2
 Explicación: Las islas en gris están cerradas porque están completamente rodeadas de agua (grupo de 1s)
 """
+class issueFour :
+    def __init__(self, map: list[list[str]]) -> int:
+        self.map = map
+
+    def dfs(self, i,j):
+       if 0<=i<len(self.map) and 0<=j<len(self.map[0]):
+            if self.map[i][j] == 1:
+                return True
+            self.map[i][j] = 1
+            above = self.dfs(i + 1, j)
+            below = self.dfs(i - 1, j)
+            right = self.dfs(i, j + 1)
+            left = self.dfs(i, j - 1)
+            return above and below and right and left
+       else :
+        return False
+
+    def getNumberOfCloseIslands(self):
+        counter = 0
+        for i in range(len(self.map)):
+            for j in range(len(self.map[0])):
+                if self.map[i][j] == 0 and self.dfs(i, j):
+                    self.dfs(i,j)
+                    counter+=1
+        return counter
+
+issueFour = issueFour([
+        [1,1,1,1,1,1,1,0],
+        [1,0,0,0,0,1,1,0],
+        [1,0,1,0,1,1,1,0],
+        [1,0,0,0,0,1,0,1],
+        [1,1,1,1,1,1,1,0]
+])
+result = issueFour.getNumberOfCloseIslands()
+print(result)
