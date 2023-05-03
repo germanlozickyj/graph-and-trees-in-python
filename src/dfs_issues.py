@@ -185,7 +185,7 @@ class issueFour :
         self.map = map
 
     def dfs(self, i,j):
-       if 0<=i<len(self.map) and 0<=j<len(self.map[0]):
+       if 0 <= i < len(self.map) and 0 <=j < len(self.map[0]):
             if self.map[i][j] == 1:
                 return True
             self.map[i][j] = 1
