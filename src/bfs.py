@@ -48,13 +48,14 @@ def moveHorsesInChess(origen_x : int, origen_y : int, objetivo_x : int, objetivo
     while queue :
         for _ in range(len(queue)):
             current_position = queue.pop(0)
-            if cache[0] == current_position[0] and cache[1] == current_position[1]: continue
             if current_position[0] == objetivo_x and current_position[1] == objetivo_y :
                 return counter
+            if cache[0] == current_position[0] and cache[1] == current_position[1]: continue
             cache.append([
                     current_position[0],
                     current_position[1]
                 ])
+            
             for movement in movements:
                 x = current_position[0] + movement[0]
                 y = current_position[1] + movement[1]
@@ -64,6 +65,7 @@ def moveHorsesInChess(origen_x : int, origen_y : int, objetivo_x : int, objetivo
                     current_position[1] + movement[1]
                 ])
         counter+=1
+        
     return counter
                 
 
