@@ -24,21 +24,21 @@ orangesRotting(cultivo);
 """
 
 def oranges_rotting(crop):
-    counter = 0
+    days = 0
     for y in range(len(crop)):
           for x in range(len(crop[0])):
             if crop[y][x] == 2:
+              rotted = 0
               crop[y][x] = 3
-              current_count = 0
-              if y + 1 < len(crop) and crop[ y + 1][x] == 1 : 
-                current_count+=1
+              if y + 1 < len(crop) and crop[y + 1][x] == 1 : 
+                rotted += 1
                 crop[y+1][x] = 2 
-              if x+1 < len(crop[0]) and crop[y][x+1] == 1:
-                current_count+=1
-                crop[y][x+1] = 2
-              if not current_count == 0:
-                counter+=1
-    return counter
+              if x + 1 < len(crop[0]) and crop[y][x + 1] == 1:
+                rotted += 1
+                crop[y][x + 1] = 2
+              if not rotted == 0:
+                days+=1
+    return days
 
 print(oranges_rotting([
   [2,1,1],
