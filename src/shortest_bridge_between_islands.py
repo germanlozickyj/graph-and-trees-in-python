@@ -38,23 +38,26 @@ Bridge().shortestBridge(mapa)
 class Bridge:
   def __init__(self) -> None:
     self.map = None
+    self.bridge = 0
     
   def shortestBridge(self, map):
       self.map = map
-      bridges = 0
       for y in range(len(map)):
         for x in range(len(self.map[0])):
+          if self.map[y][x] == 1 and x + 1 < len(self.map[0]) and self.map[y][x + 1] == 1:
             self.dfs(x, y)
-            bridges += 1
-         
-      return bridges
+      return self.bridge
+  
   def dfs(self, y, x):
-      if 0 <= y < len(self.map) and 0 <= x < len(self.map[0]) and self.map[y][x] == 1 :
-          self.map[y][x] = 2
-          self.dfs(y+1, x)
-          self.dfs(y-1, x)
-          self.dfs(y, x+1)
-          self.dfs(y, x-1)
+      if y < len(self.map) and x < len(self.map[0]):
+        for x in range(len(self.map[0]) - x):
+            if self.map[y][x] == 0 and x + 1 < len(self.map[0]) and self.map[y][x + 1] == 1:
+              self.bridge += 1
+        for y in range(len(self.map) - y):
+            if self.map[y][x] == 0 and y + 1 < len(self.map) and self.map[y + 1][x] == 1:
+              self.bridge += 1
+      return 
+            
 """
 mapa = [
   [1,1,1,1,1],
