@@ -70,9 +70,9 @@ mapa = [
   [1,0,0,0,1],
   [1,1,1,1,1],
 ]
+
 response = Bridge().shortestBridge(mapa)
 print(response)
-
 
 mapa = [
   [1,1,0,0,1],
