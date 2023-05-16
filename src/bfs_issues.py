@@ -1,16 +1,51 @@
 """
+Vuelos más baratos con K paradas
+Hay n ciudades conectadas por un cierto número de vuelos. 
+Se le da un array flights donde flights[i] = [fromi, toi, pricei] 
+indica que hay un vuelo desde la ciudad fromi a la ciudad toi con un precioi. 
+También se le dan tres enteros src, dst y k, devuelve el precio más barato 
+de src a dst con un máximo de k paradas. Si no existe tal ruta, devuelve -1.
+
+Ejemplo 1:
+Entrada:
+
 n = 4
 vuelos = [[0,1,100],[1,2,100],[2,0,100],[1,3,600],[2,3,200]]
-src = 0
-dst = 3
-k = 1
+
+src = 0 // de 
+dst = 3 // a
+k = 1 //paradas maximas
+
 Salida: 700
 Explicación:El gráfico se muestra arriba. El camino óptimo, con un máximo de 1 parada,
  desde la ciudad 0 a la 3 está marcado en rojo y tiene un coste de 100 + 600 = 700. 
  Nótese que el camino que pasa por las ciudades [0,1,2,3] es más barato pero no es válido porque utiliza 2 paradas.
 """
 
+class flightsIssue:
+    
+    def __init__(self, flights) -> None:
+        self.flights = flights
+    
+    def optime_road(self, n, src, dst, k):
+        queue = [src, 0, 0]
+        
+        while queue :
+            current_flights, next_flight, current_cost = queue.pop(0)
 
+            for flight in self.flights :
+               
+
+
+cost = flightsIssue([
+    [0, 1, 100],
+    [1, 2, 100],
+    [2, 0, 100],
+    [1, 3, 600],
+    [2, 3, 200]
+]).optime_road(n=4, src=0, dst=3, k=1)
+
+print(cost)
 """
 Juego Escalera y Serpientes
 Se le da un tablero de matriz entera n x n en el que las casillas están etiquetadas de 
