@@ -96,7 +96,12 @@ Luego decides moverte a la casilla 14 y debes llevar la escalera a la casilla 35
 Entonces decides moverte a la casilla 36, terminando el juego. 
 Este es el menor número posible de movimientos para llegar a la última casilla, 
 así que devuelve 4.
-
+"""
+class gameOfSnake():
+    def __init__(self) -> None:
+        pass
+    
+"""
 Horario del Curso
 Hay un total de numCursos cursos que tiene que tomar, 
 etiquetados de 0 a numCursos - 1. Se le da una matriz prerrequisitos 
