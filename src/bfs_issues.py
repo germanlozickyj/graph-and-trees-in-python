@@ -1,3 +1,4 @@
+from collections import defaultdict
 """
 Vuelos más baratos con K paradas
 Hay n ciudades conectadas por un cierto número de vuelos. 
@@ -24,26 +25,33 @@ Explicación:El gráfico se muestra arriba. El camino óptimo, con un máximo de
 
 class flightsIssue:
     
-    def __init__(self, flights) -> None:
-        self.flights = flights
-    
-    def optime_road(self, n, src, dst, k):
-        queue = [src, 0, 0]
-        
-        while queue :
-            current_flights, next_flight, current_cost = queue.pop(0)
-
-            for flight in self.flights :
+    def optime_road(self, n: int, flights: list[list[int]], src: int, dst: int, k: int):
+        graph = defaultdict(list)
+        res = float('inf')
+        cola = [(src, 0, 0)]
+        for vuelo in flights:
+            graph[vuelo[0]].append((vuelo[1], vuelo[2]))
+        while cola:
+            viajeActual, nivel, precioActual = cola.pop(0)
+            if nivel > k + 1:
+                break
+            if viajeActual == dst:
+                res = min(res, precioActual)
+            for siguienteVuelo, precioSiguienteVuelo in graph[viajeActual]:
+                if precioSiguienteVuelo + precioActual >= res:
+                    continue
+                cola.append((siguienteVuelo, nivel + 1, precioSiguienteVuelo + precioActual))
+        if res != float('inf'):
+            return res
+        else:
+            return -1
                
-
-
-cost = flightsIssue([
+cost = flightsIssue().optime_road(n=4, flights=[
     [0, 1, 100],
     [1, 2, 100],
     [2, 0, 100],
     [1, 3, 600],
-    [2, 3, 200]
-]).optime_road(n=4, src=0, dst=3, k=1)
+    [2, 3, 200]], src=0, dst=3, k=1)
 
 print(cost)
 """
