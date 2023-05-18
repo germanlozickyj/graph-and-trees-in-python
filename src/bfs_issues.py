@@ -53,7 +53,7 @@ cost = flightsIssue().optime_road(n=4, flights=[
     [1, 3, 600],
     [2, 3, 200]], src=0, dst=3, k=1)
 
-print(cost)
+#print(cost)
 """
 Juego Escalera y Serpientes
 Se le da un tablero de matriz entera n x n en el que las casillas están etiquetadas de 
@@ -97,10 +97,38 @@ Entonces decides moverte a la casilla 36, terminando el juego.
 Este es el menor número posible de movimientos para llegar a la última casilla, 
 así que devuelve 4.
 """
-class gameOfSnake():
-    def __init__(self) -> None:
-        pass
-    
+class gameOfSnake:
+    def __init__(self, board) -> None:
+        self.board = board
+
+    def start_game(self) -> int:
+        min_movements = 0
+        queue = [[-1, min(-1 + 6, len(self.board[0]))]]
+        while queue :
+            current, min_movement = queue.pop(0)
+            if current >= len(self.board):
+                return min_movements
+            for field in self.board[current] :
+                if field != -1 :
+                    min_movements += 1
+                    queue.append([
+                        current + 6,
+                        min(current + 1, len(self.board[0]))
+                    ])
+        return min_movements
+
+
+board = [
+    [-1,-1,-1,-1,-1,-1],
+    [-1,-1,-1,-1,-1,-1],
+    [-1,-1,-1,-1,-1,-1],
+    [-1,35,-1,-1,13,-1],
+    [-1,-1,-1,-1,-1,-1],
+    [-1,15,-1,-1,-1,-1]
+]
+
+min = gameOfSnake(board).start_game()
+print(min)
 """
 Horario del Curso
 Hay un total de numCursos cursos que tiene que tomar, 
