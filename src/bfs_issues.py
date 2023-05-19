@@ -97,26 +97,33 @@ Entonces decides moverte a la casilla 36, terminando el juego.
 Este es el menor número posible de movimientos para llegar a la última casilla, 
 así que devuelve 4.
 """
-class gameOfSnake:
-    def __init__(self, board) -> None:
-        self.board = board
-
-    def start_game(self) -> int:
-        min_movements = 0
-        queue = [[-1, min(-1 + 6, len(self.board[0]))]]
-        while queue :
-            current, min_movement = queue.pop(0)
-            if current >= len(self.board):
-                return min_movements
-            for field in self.board[current] :
-                if field != -1 :
-                    min_movements += 1
-                    queue.append([
-                        current + 6,
-                        min(current + 1, len(self.board[0]))
-                    ])
-        return min_movements
-
+def snakesAndLadders(tablero):
+   tablero.reverse()
+   tableroPlano = [0]
+   for i, fila in enumerate(tablero):
+       if i % 2 == 0:
+           tableroPlano += fila
+       else:
+           tableroPlano += fila[::-1]  
+   cola = [1]
+   casillasVisitadas = set()
+   movimientos = 0
+   while cola:
+       siguienteNivel = []
+       while cola:
+           casilla = cola.pop()
+           if casilla == len(tableroPlano)-1:
+               return movimientos
+           for i in range(1, 7):
+               if casilla + i <= len(tableroPlano)-1 and casilla + i not in casillasVisitadas:
+                   casillasVisitadas.add(casilla + i)
+                   if tableroPlano[casilla + i] != -1:
+                       siguienteNivel.append(tableroPlano[casilla + i])
+                   else:
+                       siguienteNivel.append(casilla + i)
+       cola = siguienteNivel
+       movimientos = movimientos + 1
+   return -1
 
 board = [
     [-1,-1,-1,-1,-1,-1],
@@ -127,7 +134,7 @@ board = [
     [-1,15,-1,-1,-1,-1]
 ]
 
-min = gameOfSnake(board).start_game()
+min = snakesAndLadders(board)
 print(min)
 """
 Horario del Curso
