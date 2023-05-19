@@ -152,3 +152,12 @@ Explicación: Hay un total de 2 cursos para tomar.
 Para tomar el curso 1 debes haber terminado el curso 0. 
 Así que es posible.
 """
+
+class Node():
+    def __init__(self) -> None:
+        pass
+    
+def lastIssue(numero_cursos, requisitos):
+    pass
+
+resultado = lastIssue(2, [[1, 0]])
