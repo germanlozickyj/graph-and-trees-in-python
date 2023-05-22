@@ -134,14 +134,14 @@ board = [
     [-1,15,-1,-1,-1,-1]
 ]
 
-min = snakesAndLadders(board)
-print(min)
+#min = snakesAndLadders(board)
+#print(min)
 """
 Horario del Curso
 Hay un total de numCursos cursos que tiene que tomar, 
 etiquetados de 0 a numCursos - 1. Se le da una matriz prerrequisitos 
-donde prerrequisitos[i] = [ai, bi] indica que debe tomar el curso bi primero si q
-uiere tomar el curso ai. Por ejemplo, el par [0, 1], indica que para tomar el curso 0 
+donde prerrequisitos[i] = [ai, bi] indica que debe tomar el curso bi primero si quiere
+tomar el curso ai. Por ejemplo, el par [0, 1], indica que para tomar el curso 0 
 hay que tomar primero el curso 1. Devuelve true si puedes terminar todos los cursos. 
 En caso contrario, devuelve false.
 
@@ -154,10 +154,26 @@ Así que es posible.
 """
 
 class Node():
-    def __init__(self) -> None:
-        pass
+    def __init__(self):
+        self.current_course = 0
+        self.next = []
+
+def lastIssue(number_courses, prerequisites):
+    graph = defaultdict(Node)
+
+    for requisites in prerequisites:
+        graph[requisites[0]].current_course += 1
+        graph[requisites[1]].next.append(requisites[0])  
     
-def lastIssue(numero_cursos, requisitos):
-    pass
+    queue = []
+
+    for course in graph :
+        if graph[course].current_course == 0:
+            queue.append(graph[course])
+
+    courses_taken = 0
+
+    while queue :
+        current_requisitie = queue.pop()        
 
 resultado = lastIssue(2, [[1, 0]])
