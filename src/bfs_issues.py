@@ -155,25 +155,32 @@ Así que es posible.
 
 class Node():
     def __init__(self):
-        self.current_course = 0
+        self.requisite = 0
         self.next = []
 
 def lastIssue(number_courses, prerequisites):
     graph = defaultdict(Node)
 
     for requisites in prerequisites:
-        graph[requisites[0]].current_course += 1
+        graph[requisites[0]].requisite += 1
         graph[requisites[1]].next.append(requisites[0])  
     
     queue = []
 
     for course in graph :
-        if graph[course].current_course == 0:
-            queue.append(graph[course])
-
-    courses_taken = 0
+        queue.append(graph[course])
 
     while queue :
-        current_requisitie = queue.pop()        
+        current = queue.pop()
+        taken = []
+
+        if current.next == [] and not current.requisite in taken: 
+            taken.append(current.requisite)
+
+        if current.requisite != None and current.requisite in taken: 
+            taken.append(current.next)
+
+    return number_courses == len(taken)
 
 resultado = lastIssue(2, [[1, 0]])
+print(resultado)
