@@ -163,24 +163,27 @@ def lastIssue(number_courses, prerequisites):
 
     for requisites in prerequisites:
         graph[requisites[0]].requisite += 1
-        graph[requisites[1]].next.append(requisites[0])  
+        graph[requisites[1]].next.append(graph[requisites[0]])  
     
     queue = []
 
     for course in graph :
-        queue.append(graph[course])
-
+        if graph[course].requisite == 0:
+            queue.append(graph[course])
+    
+    taken = 0
     while queue :
         current = queue.pop()
-        taken = []
+        for next_course in current.next:
+            taken += 1
+            next_course.requisite -= 1
+            if next_course.requisite == 0:
+                queue.append(next_course) 
 
-        if current.next == [] and not current.requisite in taken: 
-            taken.append(current.requisite)
+    return taken == len(prerequisites)
 
-        if current.requisite != None and current.requisite in taken: 
-            taken.append(current.next)
+resultado_false = lastIssue(2, [[1, 0], [0, 1]])
+print(resultado_false)
 
-    return number_courses == len(taken)
-
-resultado = lastIssue(2, [[1, 0]])
-print(resultado)
+resultado_2_true = lastIssue(2, [[1,0]])
+print(resultado_2_true)
