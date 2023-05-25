@@ -14,7 +14,7 @@ def backtrack(numbers):
         '9': "wxyz"
     }
     cache = []
-    str_combination = ""
+    str_combination = []
 
     for number in numbers:
         if not number in keyboard : continue
@@ -22,19 +22,20 @@ def backtrack(numbers):
             cache.append(number)
             continue
         for cache_number in cache:
-            current_str = concat_numbers(keyboard[cache_number], keyboard[number])
-            str_combination = f"{str_combination}{current_str}"
+            str_temp = concat_numbers(keyboard[cache_number], keyboard[number])
+            str_combination.extend(str_temp)
         cache.append(number)
 
     return str_combination
 
 def concat_numbers(hash_str, hash_str_two):
-    str_concated = ""
+    str_concated = []
     for x in range(len(hash_str_two)):
         for str in hash_str :
-            str_concated = f"{str_concated}{str}{hash_str_two[x]}"  
+            str_concated.append(f"{str}{hash_str_two[x]}") 
             
     return str_concated
 
-str_combination = backtrack(['2','7', '8'])
+str_combination = backtrack("23")
 print(str_combination)
+
