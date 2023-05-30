@@ -1,9 +1,10 @@
+import copy
 
-def restore_ip(s : str):
-    s_lenght = len(s)
-    if s_lenght > 24 :
+def restore_ip(s: str):
+    s_length = len(s)
+    if s_length > 24:
         return []
-    
+
     ip_list = list(s)
     ip = []
     max_range = 3
@@ -14,12 +15,40 @@ def restore_ip(s : str):
         if max_range > len(groups):
             max_range = len(groups)
 
-    ips = check_ip(ip, max_range=max_range)
+    ips = check_ip(copy.copy(ip), max_range=max_range)
+    print(ips)
 
-def check_ip(ip, review_pointer = 0, max_range = 0):
-    extracted = ip[review_pointer][review_pointer:review_pointer+max_range]
-    ip[review_pointer] = ip[review_pointer][review_pointer].replace(extracted, "")
-    print(ip)
-    
-    
+def check_ip(ip, review_pointer=0, index=0, max_range=0, ips_valid=[]):
+    str = copy.copy(ip)
+
+    if review_pointer == 3 and index <= 2:
+        return ips_valid
+
+    if index + max_range <= 3:
+        index = 0
+        review_pointer += 1
+
+    extracted = str[review_pointer][index:index+max_range]
+    str[review_pointer] = str[review_pointer][0].replace(extracted, "")
+    new_ip = []
+
+    for i in range(0, len(''.join(str)), 3):
+        groups = ''.join(''.join(str)[i:i+3])
+        new_ip.append(groups)
+        if max_range > len(groups):
+            max_range = len(groups)
+
+    new_ip.insert(0, extracted)
+
+    if check(new_ip):
+        ips_valid.append(new_ip)
+
+    return check_ip(ip, review_pointer, index, max_range, ips_valid)
+
+def check(ip):
+    for value in ip:
+        if int(value) > 255:
+            return False
+    return True
+
 restore_ip("25525511135")
