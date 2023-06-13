@@ -11,7 +11,22 @@ goals:
 - marcar con 0 las letras usadas
 """
 def word_search(board : dict, word : str):
-    pass
+    word_index = 0
+    queue = [[0, 0, word[0]]]
+
+    while queue:
+        y, x, letter = queue.pop() 
+        for y in range(len(board) - y) :
+          for x in range(len(board[0]) - x) :
+            if board[y][x] == letter:
+                board[y][x] = 0
+                word_index += 1
+                queue.push([
+                   y, x, word_index
+                ])
+
+
+
 
 board = [
   ["A", "B", "C", "E"],
