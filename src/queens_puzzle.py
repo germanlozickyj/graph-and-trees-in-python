@@ -8,11 +8,32 @@ distinta de la colocación de n reinas, donde “Q” y “.” indican una rein
 
 """
 Entrada: n = 4
-Salida: [[".Q…","…Q",“Q…”,"…Q."],["…Q.",“Q…”,"…Q",".Q…"]]
+Salida: [[
+    ".Q…",
+    "…Q",
+    “Q…”,
+    "…Q."],
+    ["…Q.",
+    “Q…”,
+    "…Q",
+    ".Q…"
+    ]]
 Explicación: Existen dos soluciones distintas al rompecabezas de las 4 reinas como se muestra arriba
 """
-def queens_puzzle(n : int):
-    pass
+def backtrack_queens_puzzle(n : int):
+    board = [[0 for _ in range(n)] for _ in range(n)]
+    result = dfs(n, current_collection=board)
+    return result
+
+def dfs(n, pointer = 0, collection_cache = [], current_collection = [], solutions = []):
+    collection_cache[pointer] = current_collection
+    current_collection[0][pointer] = 1
+    tmp_board = write_kill_cell(n, pointer, current_collection)
+
+def write_kill_cell(n, x, board, y = 0):    
+    if n == x and n == y :
+        return board
+
 
 n = 4
-result = queens_puzzle(n)
+result = backtrack_queens_puzzle(n)
