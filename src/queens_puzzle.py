@@ -41,9 +41,7 @@ class Solution :
     def dfs(self):
         tmp_board = self.kill_cell(self.current_board)
         self.current_board = tmp_board
-        tmp_cache = [self.cache_board]
-        self.cache_board = tmp_cache.append(tmp_board)
-
+        self.cache_board.append(tmp_board)
         self.y += 1
 
         for x in range(self.n) :
