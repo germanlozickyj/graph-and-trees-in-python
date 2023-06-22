@@ -5,6 +5,11 @@ Dado un número entero n, devuelva todas las soluciones distintas del rompecabez
 Puede devolver la respuesta en cualquier orden. Cada solución contiene una configuración del tablero 
 distinta de la colocación de n reinas, donde “Q” y “.” indican una reina y un espacio vacío, respectivamente.
 
+[[[1, 3, 3, 3], [3, 3, 1, 3], [3, 3, 3, 3], [3, 0, 3, 3]]
+    [1, 3, 3, 3], 
+    [3, 3, 1, 3], 
+    [3, 3, 3, 3], 
+    [3, 0, 3, 3]]
 """
 
 """
@@ -24,33 +29,40 @@ Explicación: Existen dos soluciones distintas al rompecabezas de las 4 reinas c
 
 import copy
 
-class Solution :
-    def __init__(self, n : int) -> None:
+class Solution:
+    def __init__(self, n: int) -> None:
         board = [[0 for _ in range(n)] for _ in range(n)]
         self.n = n
         self.y = 0
         self.x = 0
-        self.cache_board = board
-        self.current_board = board
-        self.solutions = []  
+        self.cache_board = copy.deepcopy(board)
+        self.current_board = copy.deepcopy(board)
+        self.solutions = []
 
     def backtrack_queens_puzzle(self):
         result = self.dfs()
         return result
 
-    def dfs(self):
-        tmp_board = self.kill_cell(self.current_board)
-        self.current_board = tmp_board
-        self.cache_board.append(tmp_board)
+    def dfs(self):        
+        tmp_board = self.kill_cell(copy.deepcopy(self.current_board))
+        self.current_board = copy.deepcopy(tmp_board)
         self.y += 1
 
-        for x in range(self.n) :
-            if self.current_board[self.y][x] == 0 :
+        for x in range(n - 1):
+            if self.current_board[self.y][x] == 0:
+                self.cache_board.append(copy.deepcopy(self.current_board))
+                self.x = x
                 return self.dfs()
-            
-        return self.cache_board
-    #no visited 0 current 1 visited 2 kill 3
-
+        
+        #no hay espacios vacios para la reina
+        last_board = copy.deepcopy(self.cache_board).pop()
+        last_board[self.y - 1][self.x] = 2
+        self.current_board = copy.deepcopy(last_board)
+        #guardar en cache ultima casilla visitada y dada de baja
+        self.cache_board.append(copy.deepcopy(self.current_board))
+        self.y -= 1
+        return self.dfs()
+        
     def kill_cell(self, board):
         y_increment = self.y
         y_decrement = self.y
@@ -61,17 +73,21 @@ class Solution :
             board[self.y][movement] = 3
             board[movement][self.x] = 3
 
-            if y_decrement >= self.n and x_decrement >= self.n and board[y_decrement][x_decrement] == 3 or board[y_decrement][x_decrement] == 0:
-                board[y_decrement][x_decrement] = 3
+            if y_decrement >= self.n and x_decrement >= self.n :
+                if board[y_decrement][x_decrement] == 3 or board[y_decrement][x_decrement] == 0:
+                    board[y_decrement][x_decrement] = 3
+                
+            if y_increment < self.n and x_increment < self.n :
+                if board[y_increment][x_increment] == 3 or board[y_increment][x_increment] == 0 :
+                    board[y_increment][x_increment] = 3
 
-            if y_increment < self.n and x_increment < self.n and board[y_increment][x_increment] == 3 or board[y_increment][x_increment] == 0:
-                board[y_increment][x_increment] = 3
-
-            if y_increment < self.n and x_decrement >= 0 and board[y_increment][x_decrement] == 3 or board[y_increment][x_decrement] == 0:
-                board[y_increment][x_decrement] = 3
+            if y_increment < self.n and x_decrement >= 0:
+                if board[y_increment][x_decrement] == 3 or board[y_increment][x_decrement] == 0:
+                    board[y_increment][x_decrement] = 3
             
-            if y_decrement >= self.n and x_increment >= self.n and board[y_decrement][x_increment] == 3 or board[y_decrement][x_increment] == 0:
-                board[y_decrement][x_increment] = 3
+            if y_decrement >= self.n and x_increment >= self.n:
+                if board[y_decrement][x_increment] == 3 or board[y_decrement][x_increment] == 0:
+                    board[y_decrement][x_increment] = 3
             y_increment += 1
             x_increment += 1
             y_decrement -= 1
