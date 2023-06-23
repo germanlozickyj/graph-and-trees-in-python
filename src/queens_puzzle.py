@@ -34,8 +34,8 @@ class Solution:
         
     def dfs(self, n):        
         col = set() 
-        positive = set() # r + c 
-        negative = set() # r - c
+        positive = set()
+        negative = set()
         response = []
         board = [["."] * n for i in range(n)]
 
@@ -43,6 +43,26 @@ class Solution:
             if y == n:
                 copy = ["".join(row) for row in board]
                 response.append(copy)
+            
+            for c in range(n) :
+                if c in col or (y + c) in positive or (y - c) in negative : 
+                    continue
+                
+                col.add(c)
+                positive.add(y + c)
+                negative.add(y - c)
+                board[y][c] = "Q"
+
+                backtrack(y + 1)
+
+                col.remove(c)
+                positive.remove(y + c)
+                negative.remove(y - c)
+                board[y][c] = "."
+        
+        backtrack(0)
+
+        return response
 
 n = 4
 result = Solution().backtrack_queens_puzzle(n)
