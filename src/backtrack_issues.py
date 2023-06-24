@@ -109,11 +109,3 @@ Salida: [“3z4”, “3Z4”]
 def combination_of_letters():
     pass
 
-"""
-Permutaciones
-Dado un array nums de enteros distintos, devuelve todas las permutaciones posibles. 
-Puede devolver la respuesta en cualquier orden.
-"""
-
-def permutations_of_numbers():
-    pass
