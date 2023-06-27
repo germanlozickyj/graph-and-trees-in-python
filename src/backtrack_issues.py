@@ -88,8 +88,8 @@ def permutations(input):
 
 
 
-print(permutations([1,2,3]))
-print(permutations([0,1]))
+#print(permutations([1,2,3]))
+#print(permutations([0,1]))
 
 """
 Combinaciones de Letras
@@ -106,6 +106,20 @@ Ejemplo 2:
 Entrada: s = "3z4"
 Salida: [“3z4”, “3Z4”]
 """
-def combination_of_letters():
-    pass
+def combination_of_letters(S : str):
+    response = []
+
+    def dfs(current, pointer):
+        if pointer == len(S):
+            return
+        
+        for x in set([S[pointer].upper(), S[pointer].lower()]):
+            current.append(x)
+    
+    dfs(response, 0)
+    
+    return response
+
+combination_of_letters("a1b2")
+
 
