@@ -100,26 +100,34 @@ Devuelve la salida en cualquier orden.
 
 Ejemplo 1:
 Entrada: s = "a1b2"
-Salida: [“a1b2”,“a1B2”,“A1b2”,“A1B2”]
+Salida: [
+            “a1b2”,
+            “a1B2”,
+            “A1b2”,
+            “A1B2”
+        ]
 
 Ejemplo 2:
 Entrada: s = "3z4"
 Salida: [“3z4”, “3Z4”]
 """
-def combination_of_letters(S : str):
+def combination_of_letters(string : str):
     response = []
 
-    def dfs(current, pointer):
-        if pointer == len(S):
-            return
-        
-        for x in set([S[pointer].upper(), S[pointer].lower()]):
-            current.append(x)
-    
-    dfs(response, 0)
-    
-    return response
+    def dfs(pointer, response):
+        if len(response) == len(string):
+            return response
 
-combination_of_letters("a1b2")
+        if string[pointer].isalpha():
+            response.append(string.replace(string[pointer], string[pointer].lower()))
+            response.append(string.replace(string[pointer], string[pointer].upper()))
+            return dfs(pointer+1, response)
+        else:
+            return dfs(pointer+1, response)
+            
+    return dfs(0, response)
+
+response = combination_of_letters("a1b2")
+print(response)
 
 
